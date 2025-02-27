@@ -9,6 +9,5 @@ test("should created product", () => {
         size: "10"
     }, "111")
 
-    console.log(product)
     expect(product.id).toEqual('111')
 })
