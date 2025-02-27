@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto'
+
 import { Product } from './product'
 
 test("should created product", () => {
