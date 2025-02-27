@@ -1,0 +1,17 @@
+{
+  "name": "inventory-control-challenge-ddd",
+  "version": "1.0.0",
+  "description": "Atividade: Mapeando o domínio",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
