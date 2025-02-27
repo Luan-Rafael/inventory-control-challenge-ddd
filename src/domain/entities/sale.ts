@@ -1,0 +1,16 @@
+import { Entity } from "@/core/entities/entity";
+import { Optional } from "@/core/types/options";
+
+interface SaleProps {
+    productId: string,
+    customerId: string,
+    amount: number,
+    createdAt: Date
+}
+
+export class Sale extends Entity<SaleProps> {
+    static create(props: Optional<SaleProps, 'createdAt'>, id?: string) {
+        const product = new Sale({ ...props, createdAt: new Date() }, id)
+        return product
+    }
+}
