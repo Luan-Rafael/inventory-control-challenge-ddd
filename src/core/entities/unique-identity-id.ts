@@ -3,11 +3,11 @@ import { randomUUID } from "crypto"
 export class UniqueIdentityId {
     private _value: string
 
-    get toString() {
+    toString() {
         return this._value
     }
 
-    get toValue() {
+    toValue() {
         return this._value
     }
     constructor(value?: string) {
