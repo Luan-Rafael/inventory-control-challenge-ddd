@@ -3,48 +3,46 @@ import { Movement } from "../entities/movement"
 import { ProcessSaleUseCase } from "./process-sale-usecase"
 import { RegisterStockMovementUseCase } from "./register-stock-movement-usecase"
 import { SaleConfirmedEvent } from "../events/sale-confirmed-event"
+import { Sale } from "../entities/sale"
+import { ISaleRepositoryImpl } from "../repositories/sale-repository-impl"
+import { IMovementRepositoryImpl } from "../repositories/movement-repository-impl"
+import { SaleRepository } from "../repositories/sale-repository"
+import { Mocked } from "vitest"
+import { fn } from "@vitest/spy"
+import { execPath } from "process"
 
-test("should process a sale and update stock", () => {
-    const movements = [
-        Movement.create({
-            amount: 1,
-            productId: new UniqueIdentityId("1"),
-        }),
-        Movement.create({
-            amount: 1,
-            productId: new UniqueIdentityId("1"),
-        }),
-        Movement.create({
-            amount: 1,
-            productId: new UniqueIdentityId("1"),
-        }),
-        Movement.create({
-            amount: 1,
-            productId: new UniqueIdentityId("1"),
-        }),
-        Movement.create({
-            amount: 1,
-            productId: new UniqueIdentityId("1"),
-        }),
-        Movement.create({
-            amount: 1,
-            productId: new UniqueIdentityId("1"),
-        })
-    ]
+describe("ProcessSaleUseCase", async () => {
+    let processSaleUseCase: ProcessSaleUseCase;
+    let movementRepository: Mocked<IMovementRepositoryImpl>;
+    let saleRepository: Mocked<SaleRepository>;
 
-    const usecase = new ProcessSaleUseCase()
-    const registerStock = new RegisterStockMovementUseCase()
+    beforeEach(() => {
+        movementRepository = {
+            getProductBalance: fn(),
+            save: fn()
+        } as Mocked<IMovementRepositoryImpl>;
 
-    const sale = usecase.execute({
-        amount: 1,
-        customerId: new UniqueIdentityId('1'),
-        productId: new UniqueIdentityId('1')
-    })
+        saleRepository = {
+            save: fn(),
+        } as Mocked<SaleRepository>;
 
-    movements.push(registerStock.execute(new SaleConfirmedEvent(new UniqueIdentityId('1'), 1)))
+        processSaleUseCase = new ProcessSaleUseCase(movementRepository, saleRepository);
+    });
 
-    const amountCurrent = movements.reduce((acc, cur) => acc += cur.amount, 0)
 
-    expect(amountCurrent).toEqual(5)
+    test("deve lançar um erro quando não há saldo suficiente", async () => {
+        movementRepository.getProductBalance.mockResolvedValue(2);
+
+        await expect(processSaleUseCase.execute({
+            amount: 3,
+            customerId: new UniqueIdentityId("1"),
+            productId: new UniqueIdentityId("1")
+        }))
+            .rejects
+            .toThrow("Saldo insuficiente para processar a venda.");
+
+
+    });
+
 
 })
