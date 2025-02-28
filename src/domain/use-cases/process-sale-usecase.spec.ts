@@ -1,15 +1,9 @@
-import { UniqueIdentityId } from "@/core/entities/unique-identity-id"
-import { Movement } from "../entities/movement"
-import { ProcessSaleUseCase } from "./process-sale-usecase"
-import { RegisterStockMovementUseCase } from "./register-stock-movement-usecase"
-import { SaleConfirmedEvent } from "../events/sale-confirmed-event"
-import { Sale } from "../entities/sale"
-import { ISaleRepositoryImpl } from "../repositories/sale-repository-impl"
+import { UniqueIdentityId } from "@/core/entities/unique-identity-id" 
+import { ProcessSaleUseCase } from "./process-sale-usecase" 
 import { IMovementRepositoryImpl } from "../repositories/movement-repository-impl"
 import { SaleRepository } from "../repositories/sale-repository"
 import { Mocked } from "vitest"
 import { fn } from "@vitest/spy"
-import { execPath } from "process"
 
 describe("ProcessSaleUseCase", async () => {
     let processSaleUseCase: ProcessSaleUseCase;

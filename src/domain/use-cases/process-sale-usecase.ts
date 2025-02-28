@@ -3,8 +3,7 @@ import { Sale } from "../entities/sale";
 import { DomainEventDispatcher } from "@/core/events/domain-events-dispatcher";
 import { SaleConfirmedEvent } from "../events/sale-confirmed-event";
 import { ISaleRepositoryImpl } from "../repositories/sale-repository-impl";
-import { IMovementRepositoryImpl } from "../repositories/movement-repository-impl";
-import { Movement } from "../entities/movement";
+import { IMovementRepositoryImpl } from "../repositories/movement-repository-impl"; 
 
 interface ProcessSaleUseCaseProps {
     productId: UniqueIdentityId,
